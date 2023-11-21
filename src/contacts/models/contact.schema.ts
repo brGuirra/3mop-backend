@@ -1,5 +1,5 @@
-import { SchemaFactory, Schema, Prop } from '@nestjs/mongoose';
-import { AbstractDocument } from 'src/common/database/abstract.schema';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { AbstractDocument } from '@src/common/database';
 
 @Schema()
 class Address {
@@ -22,12 +22,14 @@ class Address {
 @Schema({ versionKey: false })
 export class ContactDocument extends AbstractDocument {
   @Prop()
-  name: string;
+  firstName: string;
 
   @Prop()
-  surname: string;
+  lastName: string;
 
-  @Prop()
+  @Prop({
+    unique: true,
+  })
   email: string;
 
   @Prop()

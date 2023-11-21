@@ -6,7 +6,7 @@ import type {
   MongooseModuleFactoryOptions,
 } from '@nestjs/mongoose';
 import { MongooseModule } from '@nestjs/mongoose';
-import { EnvironmentVariables } from '../config';
+import { EnvironmentVariables } from '@src/common/config';
 
 @Global()
 @Module({

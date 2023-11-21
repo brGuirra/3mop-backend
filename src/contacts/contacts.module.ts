@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ContactsRepository } from './providers/';
-import { DatabaseModule } from 'src/common';
+import { DatabaseModule } from '@src/common';
 import { ContactDocument, ContactSchema } from './models';
+import { ContactsRepository } from './providers/';
+import { CreateContactService } from './services';
 
 @Module({
   imports: [
@@ -12,6 +13,6 @@ import { ContactDocument, ContactSchema } from './models';
       },
     ]),
   ],
-  providers: [ContactsRepository],
+  providers: [ContactsRepository, CreateContactService],
 })
 export class ContactsModule {}
