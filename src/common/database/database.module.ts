@@ -1,5 +1,5 @@
 import type { DynamicModule } from '@nestjs/common';
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type {
   ModelDefinition,
@@ -8,6 +8,7 @@ import type {
 import { MongooseModule } from '@nestjs/mongoose';
 import { EnvironmentVariables } from '../config';
 
+@Global()
 @Module({
   imports: [
     MongooseModule.forRootAsync({
@@ -16,7 +17,6 @@ import { EnvironmentVariables } from '../config';
         configService: ConfigService<EnvironmentVariables>,
       ): MongooseModuleFactoryOptions => ({
         uri: configService.get('DATABASE_URL'),
-        authSource: 'admin',
       }),
     }),
   ],

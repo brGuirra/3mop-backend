@@ -4,15 +4,31 @@ services:
     image: mongo:latest
     container_name: 3mop_database
     environment:
-      MONGO_INITDB_DATABASE: ${DATABASE_NAME}
-      MONGO_INITDB_ROOT_USERNAME: ${DATABASE_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      - MONGO_INITDB_ROOT_USERNAME=${DATABASE_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${DATABASE_PASSWORD}
+      - MONGO_INITDB_DATABASE=${DATABASE_NAME}
     ports:
       - ${DATABASE_PORT}:27017
     env_file:
       - .${NODE_ENV}.env
     volumes:
       - database_data:/data/db
+
+  database_admin:
+    image: mongo-express:latest
+    container_name: 3mop_database_admin
+    ports:
+      - ${MONGO_EXPRESS_PORT}:8081
+    links:
+      - database
+    env_file:
+      - .${NODE_ENV}.env
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=${DATABASE_USERNAME}
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=${DATABASE_PASSWORD}
+      - ME_CONFIG_MONGODB_URL=mongodb://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@database:${DATABASE_PORT}/${DATABASE_NAME}?authSource=admin
+      - ME_CONFIG_BASICAUTH_USERNAME=${MONGO_EXPRESS_USERNAME}
+      - ME_CONFIG_BASICAUTH_PASSWORD=${MONGO_EXPRESS_PASSWORD}
 
   app:
     build:
@@ -28,7 +44,7 @@ services:
     env_file:
       - .${NODE_ENV}.env
     environment:
-      - DATABASE_URL=mongodb://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@database:${DATABASE_PORT}/${DATABASE_NAME}
+      - DATABASE_URL=mongodb://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@database:${DATABASE_PORT}/${DATABASE_NAME}?authSource=admin
     volumes:
       - .:/usr/src/app
 
