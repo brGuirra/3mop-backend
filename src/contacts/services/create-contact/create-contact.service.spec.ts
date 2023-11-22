@@ -1,10 +1,10 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { ContactsRepository } from '@src/contacts/providers';
-import { CreateContactService } from './create-contact.service';
-import { ContactDocument, CreateContact } from '@src/contacts/models';
-import { faker } from '@faker-js/faker';
+import { faker } from '@faker-js/faker/locale/pt_BR';
 import { ConflictException } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
+import { ContactDocument, CreateContact } from '@src/contacts/models';
+import { ContactsRepository } from '@src/contacts/providers';
 import { Types } from 'mongoose';
+import { CreateContactService } from './create-contact.service';
 
 describe('CreateContactService', () => {
   let createContactService: CreateContactService;

@@ -7,6 +7,9 @@ class Address {
   street: string;
 
   @Prop()
+  neighborhood: string;
+
+  @Prop()
   city: string;
 
   @Prop()

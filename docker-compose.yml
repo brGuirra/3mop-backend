@@ -17,6 +17,8 @@ services:
   database_admin:
     image: mongo-express:latest
     container_name: 3mop_database_admin
+    depends_on:
+      - database
     ports:
       - ${MONGO_EXPRESS_PORT}:8081
     links:
@@ -35,7 +37,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
       target: development
-    command: npx nest start --watch
+    command: npm run start:dev
     container_name: 3mop_api
     depends_on:
       - database

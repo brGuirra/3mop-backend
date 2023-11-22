@@ -1,4 +1,4 @@
 export enum Environments {
   TEST = 'test',
-  LOCAL = 'local',
+  DEVELOPMENT = 'development',
 }

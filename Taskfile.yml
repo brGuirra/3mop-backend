@@ -1,0 +1,26 @@
+version: '3'
+
+tasks:
+  default:
+    desc: List all available tasks
+    cmds:
+      - task --list-all
+  build:
+    desc: Build application docker image for local development
+    dotenv: ['.development.env']
+    cmds:
+      - docker compose --env-file .${NODE_ENV}.env build
+    silent: true
+  up:
+    desc: Start containers for local development
+    dotenv: ['.development.env']
+    cmds:
+      - docker compose --env-file .${NODE_ENV}.env up -d database database_admin app
+    silent: true
+
+  stop:
+    desc: Stop containers for local development
+    dotenv: ['.development.env']
+    cmds:
+      - docker compose --env-file .${NODE_ENV}.env stop database database_admin app
+    silent: true
