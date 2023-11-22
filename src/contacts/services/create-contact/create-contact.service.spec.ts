@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker/locale/pt_BR';
 import { ConflictException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ContactDocument, CreateContact } from '@src/contacts/domain/models';
-import { ContactsRepository } from '@src/contacts/providers';
+import { ContactsRepository } from '@src/contacts/infra/providers';
 import { Types } from 'mongoose';
 import { CreateContactService } from './create-contact.service';
 
@@ -41,10 +41,11 @@ describe('CreateContactService', () => {
       firstName: faker.person.firstName(),
       lastName: faker.person.lastName(),
       email: faker.internet.email(),
-      phone: faker.phone.number(),
+      cellphone: faker.phone.number(),
       address: {
         street: faker.location.street(),
-        neighborhood: faker.location.streetAddress(),
+        buildingNumber: faker.location.buildingNumber(),
+        streetAddress: faker.location.streetAddress(),
         city: faker.location.city(),
         zipCode: faker.location.zipCode(),
         state: faker.location.state(),
@@ -69,10 +70,11 @@ describe('CreateContactService', () => {
       firstName: faker.person.firstName(),
       lastName: faker.person.lastName(),
       email: faker.internet.email(),
-      phone: faker.phone.number(),
+      cellphone: faker.phone.number(),
       address: {
         street: faker.location.street(),
-        neighborhood: faker.location.streetAddress(),
+        buildingNumber: faker.location.buildingNumber(),
+        streetAddress: faker.location.streetAddress(),
         city: faker.location.city(),
         zipCode: faker.location.zipCode(),
         state: faker.location.state(),
@@ -99,10 +101,11 @@ describe('CreateContactService', () => {
       firstName: faker.person.firstName(),
       lastName: faker.person.lastName(),
       email: faker.internet.email(),
-      phone: faker.phone.number(),
+      cellphone: faker.phone.number(),
       address: {
         street: faker.location.street(),
-        neighborhood: faker.location.streetAddress(),
+        buildingNumber: faker.location.buildingNumber(),
+        streetAddress: faker.location.streetAddress(),
         city: faker.location.city(),
         zipCode: faker.location.zipCode(),
         state: faker.location.state(),
@@ -130,10 +133,11 @@ describe('CreateContactService', () => {
       firstName: faker.person.firstName(),
       lastName: faker.person.lastName(),
       email: faker.internet.email(),
-      phone: faker.phone.number(),
+      cellphone: faker.phone.number(),
       address: {
         street: faker.location.street(),
-        neighborhood: faker.location.streetAddress(),
+        buildingNumber: faker.location.buildingNumber(),
+        streetAddress: faker.location.streetAddress(),
         city: faker.location.city(),
         zipCode: faker.location.zipCode(),
         state: faker.location.state(),

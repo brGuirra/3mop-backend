@@ -1,25 +1,57 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { AbstractDocument } from '@src/common/database';
 
+export enum StatesEnum {
+  AC = 'AC',
+  AL = 'AL',
+  AP = 'AP',
+  AM = 'AM',
+  BA = 'BA',
+  CE = 'CE',
+  DF = 'DF',
+  ES = 'ES',
+  GO = 'GO',
+  MA = 'MA',
+  MT = 'MT',
+  MS = 'MS',
+  MG = 'MG',
+  PA = 'PA',
+  PB = 'PB',
+  PR = 'PR',
+  PE = 'PE',
+  PI = 'PI',
+  RJ = 'RJ',
+  RN = 'RN',
+  RS = 'RS',
+  RO = 'RO',
+  RR = 'RR',
+  SC = 'SC',
+  SP = 'SP',
+  SE = 'SE',
+  TO = 'TO',
+}
+
 @Schema()
-class Address {
+export class Address {
   @Prop()
   street: string;
 
   @Prop()
-  neighborhood: string;
+  buildingNumber: string;
+
+  @Prop()
+  streetAddress: string;
 
   @Prop()
   city: string;
 
-  @Prop()
-  state: string;
+  @Prop({
+    type: () => StatesEnum,
+  })
+  state: StatesEnum;
 
   @Prop()
   zipCode: string;
-
-  @Prop()
-  country: string;
 }
 
 @Schema({ versionKey: false })
@@ -36,9 +68,11 @@ export class ContactDocument extends AbstractDocument {
   email: string;
 
   @Prop()
-  phone: string;
+  cellphone: string;
 
-  @Prop()
+  @Prop({
+    type: () => Address,
+  })
   address: Address;
 }
 

@@ -4,7 +4,7 @@ import {
   UpdateContact,
   UpdateContactUseCase,
 } from '@src/contacts/domain';
-import { ContactsRepository } from '@src/contacts/providers';
+import { ContactsRepository } from '@src/contacts/infra/providers';
 
 @Injectable()
 export class UpdateContactService implements UpdateContactUseCase {

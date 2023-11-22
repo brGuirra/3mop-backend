@@ -1,9 +1,9 @@
 import { faker } from '@faker-js/faker/locale/pt_BR';
 import { Test, TestingModule } from '@nestjs/testing';
-import { ContactsRepository } from '@src/contacts/providers';
-import { FindContactService } from './find-contact.service';
 import { ContactDocument } from '@src/contacts/domain';
+import { ContactsRepository } from '@src/contacts/infra/providers';
 import { Types } from 'mongoose';
+import { FindContactService } from './find-contact.service';
 
 describe('FindContactService', () => {
   let findContactService: FindContactService;
@@ -53,10 +53,11 @@ describe('FindContactService', () => {
       firstName: faker.person.firstName(),
       lastName: faker.person.lastName(),
       email: faker.internet.email(),
-      phone: faker.phone.number(),
+      cellphone: faker.phone.number(),
       address: {
         street: faker.location.street(),
-        neighborhood: faker.location.streetAddress(),
+        buildingNumber: faker.location.buildingNumber(),
+        streetAddress: faker.location.streetAddress(),
         city: faker.location.city(),
         zipCode: faker.location.zipCode(),
         state: faker.location.state(),

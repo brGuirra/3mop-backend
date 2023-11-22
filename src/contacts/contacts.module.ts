@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from '@src/common';
 import { ContactDocument, ContactSchema } from './domain';
-import { ContactsRepository } from './providers/';
+import { CreateContactController } from './infra/http';
+import { ContactsRepository } from './infra/providers/';
 import {
   CreateContactService,
   DeleteContactService,
@@ -27,5 +28,6 @@ import {
     FindContactService,
     DeleteContactService,
   ],
+  controllers: [CreateContactController],
 })
 export class ContactsModule {}

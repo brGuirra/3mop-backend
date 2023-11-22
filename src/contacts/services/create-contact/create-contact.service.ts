@@ -4,7 +4,7 @@ import {
   CreateContact,
   CreateContactUseCase,
 } from '@src/contacts/domain';
-import { ContactsRepository } from '@src/contacts/providers';
+import { ContactsRepository } from '@src/contacts/infra/providers';
 
 Injectable();
 export class CreateContactService implements CreateContactUseCase {

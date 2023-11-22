@@ -1,8 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { AbstractRepository } from '@src/common/database';
+import { ContactDocument } from '@src/contacts/domain';
 import { Model } from 'mongoose';
-import { ContactDocument } from '../domain';
 
 @Injectable()
 export class ContactsRepository extends AbstractRepository<ContactDocument> {

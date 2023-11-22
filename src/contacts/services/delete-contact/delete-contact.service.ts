@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DeleteContactUseCase } from '@src/contacts/domain';
-import { ContactsRepository } from '@src/contacts/providers';
+import { ContactsRepository } from '@src/contacts/infra/providers';
 
 @Injectable()
 export class DeleteContactService implements DeleteContactUseCase {

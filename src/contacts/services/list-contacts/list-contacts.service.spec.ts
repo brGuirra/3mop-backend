@@ -1,7 +1,7 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { ListContactsService } from './list-contacts.service';
-import { ContactsRepository } from '@src/contacts/providers';
 import { faker } from '@faker-js/faker';
+import { Test, TestingModule } from '@nestjs/testing';
+import { ContactsRepository } from '@src/contacts/infra/providers';
+import { ListContactsService } from './list-contacts.service';
 
 describe('ListContactsService', () => {
   let listContactsService: ListContactsService;
