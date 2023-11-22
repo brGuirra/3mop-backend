@@ -9,7 +9,7 @@ export class FindContactService implements FindContactUseCase {
     private readonly contactsRepository: ContactsRepository,
   ) {}
 
-  execute(id: string): Promise<ContactDocument> {
+  async execute(id: string): Promise<ContactDocument> {
     return this.contactsRepository.findOne({ _id: id });
   }
 }

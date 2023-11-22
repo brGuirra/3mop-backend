@@ -1,5 +1,5 @@
 import { ContactDocument } from '../models';
 
-export type FindContactUseCase = {
-  execute(id: string): Promise<ContactDocument>;
-};
+export abstract class FindContactUseCase {
+  abstract execute(id: string): Promise<ContactDocument>;
+}

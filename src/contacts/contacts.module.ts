@@ -4,6 +4,7 @@ import { ContactDocument, ContactSchema } from './domain';
 import { ContactsRepository } from './providers/';
 import {
   CreateContactService,
+  DeleteContactService,
   FindContactService,
   ListContactsService,
   UpdateContactService,
@@ -24,6 +25,7 @@ import {
     ListContactsService,
     UpdateContactService,
     FindContactService,
+    DeleteContactService,
   ],
 })
 export class ContactsModule {}

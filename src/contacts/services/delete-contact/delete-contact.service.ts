@@ -1,15 +1,15 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ContactDocument, ListContactsUseCase } from '@src/contacts/domain';
+import { DeleteContactUseCase } from '@src/contacts/domain';
 import { ContactsRepository } from '@src/contacts/providers';
 
 @Injectable()
-export class ListContactsService implements ListContactsUseCase {
+export class DeleteContactService implements DeleteContactUseCase {
   constructor(
     @Inject(ContactsRepository)
     private readonly contactsRepository: ContactsRepository,
   ) {}
 
-  async execute(): Promise<ContactDocument[]> {
-    return this.contactsRepository.find({});
+  async execute(id: string): Promise<void> {
+    await this.contactsRepository.findOneAndDelete({ _id: id });
   }
 }

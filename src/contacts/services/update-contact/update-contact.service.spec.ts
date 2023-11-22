@@ -40,6 +40,7 @@ describe('UpdateContactService', () => {
     const fakeId = faker.database.mongodbObjectId();
     const data: UpdateContact = {
       firstName: faker.person.firstName(),
+      email: faker.internet.email(),
     };
 
     jest.spyOn(contactsRepository, 'findOne').mockRejectedValueOnce(error);
@@ -62,8 +63,6 @@ describe('UpdateContactService', () => {
       firstName: faker.person.firstName(),
     };
 
-    jest.spyOn(contactsRepository, 'findOne').mockResolvedValueOnce(undefined);
-
     jest
       .spyOn(contactsRepository, 'findOneAndUpdate')
       .mockRejectedValueOnce(error);
@@ -72,10 +71,7 @@ describe('UpdateContactService', () => {
       error,
     );
 
-    expect(contactsRepository.findOne).toHaveReturnedTimes(1);
-    expect(contactsRepository.findOne).toHaveBeenCalledWith({
-      email: data.email,
-    });
+    expect(contactsRepository.findOne).toHaveReturnedTimes(0);
     expect(contactsRepository.findOneAndUpdate).toHaveBeenCalledTimes(1);
     expect(contactsRepository.findOneAndUpdate).toHaveBeenCalledWith(
       {
@@ -89,6 +85,7 @@ describe('UpdateContactService', () => {
     const fakeId = faker.database.mongodbObjectId();
     const data: UpdateContact = {
       firstName: faker.person.firstName(),
+      email: faker.internet.email(),
     };
 
     jest.spyOn(contactsRepository, 'findOne').mockResolvedValueOnce({

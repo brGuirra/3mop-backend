@@ -1,5 +1,5 @@
 import { ContactDocument, CreateContact } from '../models';
 
-export type CreateContactUseCase = {
-  execute(data: CreateContact): Promise<ContactDocument>;
-};
+export abstract class CreateContactUseCase {
+  abstract execute(data: CreateContact): Promise<ContactDocument>;
+}
