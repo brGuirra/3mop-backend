@@ -1,4 +1,4 @@
-import { Controller, HttpCode, HttpStatus, Inject } from '@nestjs/common';
+import { Controller, Get, HttpCode, HttpStatus, Inject } from '@nestjs/common';
 import {
   ApiInternalServerErrorResponse,
   ApiOkResponse,
@@ -6,8 +6,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { ListContactsService } from '@src/contacts/services';
-import { ContactDto } from '../dtos/contact.dto';
 import { plainToInstance } from 'class-transformer';
+import { ContactDto } from '../dtos';
 
 @Controller('v1/contacts')
 @ApiTags('Contacts')
@@ -18,6 +18,7 @@ export class ListContactsController {
   ) {}
 
   @HttpCode(HttpStatus.OK)
+  @Get()
   @ApiOperation({
     summary: 'List contacts',
     description: 'List contacts',
