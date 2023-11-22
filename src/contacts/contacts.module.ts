@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from '@src/common';
-import { ContactDocument, ContactSchema } from './models';
+import { ContactDocument, ContactSchema } from './domain';
 import { ContactsRepository } from './providers/';
 import {
   CreateContactService,
+  FindContactService,
   ListContactsService,
   UpdateContactService,
 } from './services';
@@ -22,6 +23,7 @@ import {
     CreateContactService,
     ListContactsService,
     UpdateContactService,
+    FindContactService,
   ],
 })
 export class ContactsModule {}

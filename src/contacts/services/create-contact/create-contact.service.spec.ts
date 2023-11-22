@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker/locale/pt_BR';
 import { ConflictException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { ContactDocument, CreateContact } from '@src/contacts/models';
+import { ContactDocument, CreateContact } from '@src/contacts/domain/models';
 import { ContactsRepository } from '@src/contacts/providers';
 import { Types } from 'mongoose';
 import { CreateContactService } from './create-contact.service';
@@ -44,6 +44,7 @@ describe('CreateContactService', () => {
       phone: faker.phone.number(),
       address: {
         street: faker.location.street(),
+        neighborhood: faker.location.streetAddress(),
         city: faker.location.city(),
         zipCode: faker.location.zipCode(),
         state: faker.location.state(),
@@ -71,6 +72,7 @@ describe('CreateContactService', () => {
       phone: faker.phone.number(),
       address: {
         street: faker.location.street(),
+        neighborhood: faker.location.streetAddress(),
         city: faker.location.city(),
         zipCode: faker.location.zipCode(),
         state: faker.location.state(),
@@ -100,6 +102,7 @@ describe('CreateContactService', () => {
       phone: faker.phone.number(),
       address: {
         street: faker.location.street(),
+        neighborhood: faker.location.streetAddress(),
         city: faker.location.city(),
         zipCode: faker.location.zipCode(),
         state: faker.location.state(),
@@ -130,6 +133,7 @@ describe('CreateContactService', () => {
       phone: faker.phone.number(),
       address: {
         street: faker.location.street(),
+        neighborhood: faker.location.streetAddress(),
         city: faker.location.city(),
         zipCode: faker.location.zipCode(),
         state: faker.location.state(),

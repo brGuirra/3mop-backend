@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker/locale/pt_BR';
 import { ConflictException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { ContactDocument, UpdateContact } from '@src/contacts/models';
+import { ContactDocument, UpdateContact } from '@src/contacts/domain';
 import { ContactsRepository } from '@src/contacts/providers';
 import { Types } from 'mongoose';
 import { UpdateContactService } from './update-contact.service';

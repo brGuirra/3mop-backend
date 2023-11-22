@@ -1,7 +1,10 @@
 import { ConflictException, Inject, Injectable } from '@nestjs/common';
-import { ContactDocument, CreateContact } from '@src/contacts/models';
+import {
+  ContactDocument,
+  CreateContact,
+  CreateContactUseCase,
+} from '@src/contacts/domain';
 import { ContactsRepository } from '@src/contacts/providers';
-import { CreateContactUseCase } from '@src/contacts/usecases';
 
 Injectable();
 export class CreateContactService implements CreateContactUseCase {
