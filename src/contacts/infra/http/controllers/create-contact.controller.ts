@@ -16,6 +16,8 @@ import {
 } from '@nestjs/swagger';
 import { CreateContactService } from '@src/contacts/services';
 import { CreateContactDto } from '../dtos';
+import { ContactDto } from '../dtos/contact.dto';
+import { plainToInstance } from 'class-transformer';
 
 @Controller('v1/contacts')
 @ApiTags('Contacts')
@@ -34,6 +36,7 @@ export class CreateContactController {
   })
   @ApiCreatedResponse({
     description: 'Squad created',
+    type: () => ContactDto,
   })
   @ApiConflictResponse({
     description: 'Conflict error',
@@ -44,7 +47,9 @@ export class CreateContactController {
   @ApiInternalServerErrorResponse({
     description: 'Internal server error',
   })
-  async execute(@Body() data: CreateContactDto): Promise<any> {
-    return this.createContactUseCase.execute(data);
+  async execute(@Body() data: CreateContactDto): Promise<ContactDto> {
+    const contact = await this.createContactUseCase.execute(data);
+
+    return plainToInstance(ContactDto, contact);
   }
 }
