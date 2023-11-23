@@ -1,4 +1,4 @@
-import { ConflictException, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import {
   ContactDocument,
   CreateContact,
@@ -14,14 +14,6 @@ export class CreateContactService implements CreateContactUseCase {
   ) {}
 
   async execute(data: CreateContact): Promise<ContactDocument> {
-    const isEmailAlreadyInUse = await this.contactsRepository.findOne({
-      email: data.email,
-    });
-
-    if (isEmailAlreadyInUse) {
-      throw new ConflictException('Email already in use.');
-    }
-
     return this.contactsRepository.create(data);
   }
 }

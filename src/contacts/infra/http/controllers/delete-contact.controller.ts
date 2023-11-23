@@ -13,6 +13,7 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import { APIError } from '@src/common/swagger';
 import { DeleteContactService } from '@src/contacts/services';
 
 @Controller('v1/contacts')
@@ -24,7 +25,7 @@ export class DeleteContactController {
   ) {}
 
   @HttpCode(HttpStatus.NO_CONTENT)
-  @Delete('{id}')
+  @Delete(':id')
   @ApiOperation({
     summary: 'Delete a contact by its id',
     description: 'Delete a contact by its id',
@@ -35,9 +36,11 @@ export class DeleteContactController {
   })
   @ApiNotFoundResponse({
     description: 'Contact not found',
+    type: () => APIError,
   })
   @ApiInternalServerErrorResponse({
     description: 'Internal server error',
+    type: () => APIError,
   })
   async execute(@Param('id') id: string): Promise<void> {
     await this.deleteContactService.execute(id);

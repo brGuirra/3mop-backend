@@ -13,8 +13,8 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import { APIError } from '@src/common/swagger';
 import { FindContactService } from '@src/contacts/services';
-import { plainToInstance } from 'class-transformer';
 import { ContactDto } from '../dtos';
 
 @Controller('v1/contacts')
@@ -26,7 +26,7 @@ export class FindContactController {
   ) {}
 
   @HttpCode(HttpStatus.OK)
-  @Get('{id}')
+  @Get(':id')
   @ApiOperation({
     summary: 'Find a contact by its id',
     description: 'Find a contact by its id',
@@ -38,13 +38,13 @@ export class FindContactController {
   })
   @ApiNotFoundResponse({
     description: 'Contact not found',
+    type: () => APIError,
   })
   @ApiInternalServerErrorResponse({
     description: 'Internal server error',
+    type: () => APIError,
   })
   async execute(@Param('id') id: string): Promise<ContactDto> {
-    const contact = await this.findContactService.execute(id);
-
-    return plainToInstance(ContactDto, contact);
+    return this.findContactService.execute(id);
   }
 }

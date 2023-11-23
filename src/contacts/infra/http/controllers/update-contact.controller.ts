@@ -16,8 +16,8 @@ import {
   ApiTags,
   ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
+import { APIError, UnprocessableEntityErrorDto } from '@src/common/swagger';
 import { UpdateContactService } from '@src/contacts/services';
-import { plainToInstance } from 'class-transformer';
 import { ContactDto, UpdateContactDto } from '../dtos';
 
 @Controller('v1/contacts')
@@ -29,7 +29,7 @@ export class UpdateContactController {
   ) {}
 
   @HttpCode(HttpStatus.OK)
-  @Put('{id}')
+  @Put(':id')
   @ApiOperation({
     summary: 'Update a contact',
     description: 'Update a contact',
@@ -41,22 +41,24 @@ export class UpdateContactController {
   })
   @ApiNotFoundResponse({
     description: 'Contact not found',
+    type: () => APIError,
   })
   @ApiConflictResponse({
     description: 'Conflict error',
+    type: () => APIError,
   })
   @ApiUnprocessableEntityResponse({
     description: 'Validation error',
+    type: () => UnprocessableEntityErrorDto,
   })
   @ApiInternalServerErrorResponse({
     description: 'Internal server error',
+    type: () => APIError,
   })
   async execute(
     @Param('id') id: string,
     @Body() data: UpdateContactDto,
   ): Promise<ContactDto> {
-    const updatedContact = await this.updateContactService.execute(id, data);
-
-    return plainToInstance(ContactDto, updatedContact);
+    return this.updateContactService.execute(id, data);
   }
 }

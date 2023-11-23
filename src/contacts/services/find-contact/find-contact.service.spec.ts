@@ -2,7 +2,6 @@ import { faker } from '@faker-js/faker/locale/pt_BR';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ContactDocument } from '@src/contacts/domain';
 import { ContactsRepository } from '@src/contacts/infra/providers';
-import { Types } from 'mongoose';
 import { FindContactService } from './find-contact.service';
 
 describe('FindContactService', () => {
@@ -49,7 +48,7 @@ describe('FindContactService', () => {
   it('should return contact information on success', async () => {
     const fakeId = faker.database.mongodbObjectId();
     const fakeContact: ContactDocument = {
-      _id: new Types.ObjectId(fakeId),
+      id: fakeId,
       firstName: faker.person.firstName(),
       lastName: faker.person.lastName(),
       email: faker.internet.email(),
@@ -61,7 +60,6 @@ describe('FindContactService', () => {
         city: faker.location.city(),
         zipCode: faker.location.zipCode(),
         state: faker.location.state(),
-        country: faker.location.country(),
       },
     };
 

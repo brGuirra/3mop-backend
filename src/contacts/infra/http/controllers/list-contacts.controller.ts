@@ -5,8 +5,8 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import { APIError } from '@src/common/swagger';
 import { ListContactsService } from '@src/contacts/services';
-import { plainToInstance } from 'class-transformer';
 import { ContactDto } from '../dtos';
 
 @Controller('v1/contacts')
@@ -31,10 +31,9 @@ export class ListContactsController {
   })
   @ApiInternalServerErrorResponse({
     description: 'Internal server error',
+    type: () => APIError,
   })
   async execute(): Promise<ContactDto[]> {
-    const contacts = await this.listContactsService.execute();
-
-    return plainToInstance(ContactDto, contacts);
+    return this.listContactsService.execute();
   }
 }

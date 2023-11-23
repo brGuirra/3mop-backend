@@ -1,19 +1,25 @@
-import { Logger, NotFoundException } from '@nestjs/common';
-import { FilterQuery, Model, Types, UpdateQuery } from 'mongoose';
+import { ConflictException, Logger, NotFoundException } from '@nestjs/common';
+import { FilterQuery, Model, Types, UpdateQuery, mongo } from 'mongoose';
 import { AbstractDocument } from './abstract.schema';
 
 export abstract class AbstractRepository<TDocument extends AbstractDocument> {
+  protected readonly UNIQUE_VIOLATION_CODE = 11000;
+
   protected abstract readonly logger: Logger;
 
   constructor(protected readonly model: Model<TDocument>) {}
 
-  async create(document: Omit<TDocument, '_id'>): Promise<TDocument> {
+  async create(document: Omit<TDocument, 'id'>): Promise<TDocument> {
     const createdDocument = new this.model({
       ...document,
       _id: new Types.ObjectId(),
     });
 
-    return (await createdDocument.save()).toJSON() as unknown as TDocument;
+    try {
+      return await createdDocument.save();
+    } catch (error) {
+      this.handleUniqueViolationError(error);
+    }
   }
 
   async find(filterQuery: FilterQuery<TDocument>): Promise<TDocument[]> {
@@ -21,15 +27,9 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
   }
 
   async findOne(filterQuery: FilterQuery<TDocument>): Promise<TDocument> {
-    const document = await this.model
-      .findOne(filterQuery)
-      .lean<TDocument>(true);
+    const document = await this.model.findOne(filterQuery);
 
-    if (!document) {
-      this.logger.warn('Document not found with filterQuery', filterQuery);
-
-      throw new NotFoundException('Document not found');
-    }
+    this.checkDocumentExistence(document);
 
     return document;
   }
@@ -38,32 +38,45 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     filterQuery: FilterQuery<TDocument>,
     data: UpdateQuery<TDocument>,
   ): Promise<TDocument> {
-    const document = await this.model
-      .findOneAndUpdate(filterQuery, data, { new: true })
-      .lean<TDocument>(true);
+    try {
+      const document = await this.model.findOneAndUpdate(filterQuery, data, {
+        new: true,
+      });
 
-    if (!document) {
-      this.logger.warn('Document not found with filterQuery', filterQuery);
+      this.checkDocumentExistence(document);
 
-      throw new NotFoundException('Document not found');
+      return document;
+    } catch (error) {
+      this.handleUniqueViolationError(error);
     }
-
-    return document;
   }
 
   async findOneAndDelete(
     filterQuery: FilterQuery<TDocument>,
   ): Promise<TDocument> {
-    const document = await this.model
-      .findOneAndDelete(filterQuery)
-      .lean<TDocument>(true);
+    const document = await this.model.findOneAndDelete(filterQuery);
 
-    if (!document) {
-      this.logger.warn('Document not found with filterQuery', filterQuery);
-
-      throw new NotFoundException('Document not found');
-    }
+    this.checkDocumentExistence(document);
 
     return document;
+  }
+
+  private checkDocumentExistence(document: TDocument) {
+    if (!document) {
+      throw new NotFoundException('document not found');
+    }
+  }
+
+  private handleUniqueViolationError(error: unknown) {
+    if (
+      error instanceof mongo.MongoServerError &&
+      error?.code === this.UNIQUE_VIOLATION_CODE
+    ) {
+      const keyValue = Object.keys(error?.keyValue)[0];
+
+      throw new ConflictException(`${keyValue} already in use`);
+    }
+
+    throw error;
   }
 }

@@ -1,8 +1,7 @@
+import { faker } from '@faker-js/faker/locale/pt_BR';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ContactsRepository } from '@src/contacts/infra/providers';
 import { DeleteContactService } from './delete-contact.service';
-import { faker } from '@faker-js/faker/locale/pt_BR';
-import { Types } from 'mongoose';
 
 describe('DeleteContactService', () => {
   let deleteContactService: DeleteContactService;
@@ -32,7 +31,7 @@ describe('DeleteContactService', () => {
     expect(contactsRepository).toBeDefined();
   });
 
-  it('should throw when ContactsRepository.findOne() throws', async () => {
+  it('should throw when ContactsRepository.findOneAndDelete() throws', async () => {
     const error = new Error(faker.lorem.word());
     const fakeId = faker.database.mongodbObjectId();
 
@@ -52,7 +51,7 @@ describe('DeleteContactService', () => {
     const fakeId = faker.database.mongodbObjectId();
 
     jest.spyOn(contactsRepository, 'findOneAndDelete').mockResolvedValueOnce({
-      _id: new Types.ObjectId(fakeId),
+      id: fakeId,
       firstName: faker.person.firstName(),
       lastName: faker.person.lastName(),
       email: faker.internet.email(),
@@ -64,7 +63,6 @@ describe('DeleteContactService', () => {
         city: faker.location.city(),
         zipCode: faker.location.zipCode(),
         state: faker.location.state(),
-        country: faker.location.country(),
       },
     });
 

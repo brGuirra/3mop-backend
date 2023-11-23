@@ -1,14 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Address, ContactDocument, StatesEnum } from '@src/contacts/domain';
-import { Transform, plainToClass } from 'class-transformer';
-import {
-  IsEmail,
-  IsEnum,
-  IsNotEmpty,
-  IsString,
-  ValidateNested,
-} from 'class-validator';
-import { Types } from 'mongoose';
+import { Address, ContactDocument } from '@src/contacts/domain';
+import { Type } from 'class-transformer';
+import { IsEmail, IsNotEmpty, IsString, ValidateNested } from 'class-validator';
 
 class AddressDto implements Address {
   @ApiProperty({
@@ -48,12 +41,11 @@ class AddressDto implements Address {
   city: string;
 
   @ApiProperty({
-    enum: () => StatesEnum,
+    type: 'string',
     description: "The state's code of the address",
-    example: 'SP',
+    example: 'São Paulo',
   })
-  @IsEnum(StatesEnum)
-  state: StatesEnum;
+  state: string;
 
   @ApiProperty({
     type: 'string',
@@ -66,8 +58,9 @@ class AddressDto implements Address {
 export class ContactDto implements ContactDocument {
   @ApiProperty({
     type: 'string',
+    example: '655f54e73b24a5dce198f493',
   })
-  _id: Types.ObjectId;
+  id: string;
 
   @ApiProperty({
     type: 'string',
@@ -108,6 +101,6 @@ export class ContactDto implements ContactDocument {
     description: 'The contact address information',
   })
   @ValidateNested()
-  @Transform((data) => plainToClass(AddressDto, data))
+  @Type(() => AddressDto)
   address: AddressDto;
 }

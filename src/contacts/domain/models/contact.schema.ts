@@ -1,37 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { AbstractDocument } from '@src/common/database';
 
-export enum StatesEnum {
-  AC = 'AC',
-  AL = 'AL',
-  AP = 'AP',
-  AM = 'AM',
-  BA = 'BA',
-  CE = 'CE',
-  DF = 'DF',
-  ES = 'ES',
-  GO = 'GO',
-  MA = 'MA',
-  MT = 'MT',
-  MS = 'MS',
-  MG = 'MG',
-  PA = 'PA',
-  PB = 'PB',
-  PR = 'PR',
-  PE = 'PE',
-  PI = 'PI',
-  RJ = 'RJ',
-  RN = 'RN',
-  RS = 'RS',
-  RO = 'RO',
-  RR = 'RR',
-  SC = 'SC',
-  SP = 'SP',
-  SE = 'SE',
-  TO = 'TO',
-}
-
-@Schema()
 export class Address {
   @Prop()
   street: string;
@@ -45,16 +14,17 @@ export class Address {
   @Prop()
   city: string;
 
-  @Prop({
-    type: () => StatesEnum,
-  })
-  state: StatesEnum;
+  @Prop()
+  state: string;
 
   @Prop()
   zipCode: string;
 }
 
-@Schema({ versionKey: false })
+@Schema({
+  collection: 'contacts',
+  timestamps: true,
+})
 export class ContactDocument extends AbstractDocument {
   @Prop()
   firstName: string;
@@ -77,3 +47,17 @@ export class ContactDocument extends AbstractDocument {
 }
 
 export const ContactSchema = SchemaFactory.createForClass(ContactDocument);
+
+ContactSchema.virtual('id').get(function () {
+  return this._id.toHexString();
+});
+
+ContactSchema.set('toJSON', {
+  virtuals: true,
+  transform: function (_, ret) {
+    delete ret._id;
+    delete ret.__v;
+    delete ret.createdAt;
+    delete ret.updatedAt;
+  },
+});
