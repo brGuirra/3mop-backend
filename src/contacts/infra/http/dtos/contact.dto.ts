@@ -3,7 +3,7 @@ import { Address, ContactDocument } from '@src/contacts/domain';
 import { Type } from 'class-transformer';
 import { IsEmail, IsNotEmpty, IsString, ValidateNested } from 'class-validator';
 
-class AddressDto implements Address {
+export class AddressDto implements Address {
   @ApiProperty({
     type: 'string',
     description: 'The street name of the address',

@@ -10,6 +10,10 @@ export function setupSwagger(app: INestApplication): void {
       'Contacts',
       'Resources to perform CRUD operations related to contacts entities',
     )
+    .addTag(
+      'Addresses',
+      'Resources to CRUD operations related to addresses entities',
+    )
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
