@@ -70,7 +70,6 @@ export class SearchAddressController {
     @Param('zipCode', new ZipCodeValidationPipe())
     zipCode: string,
   ): Observable<SearchAddressResultDto> {
-    console.log(zipCode);
     return this.searchAdddressService.execute(zipCode);
   }
 }
