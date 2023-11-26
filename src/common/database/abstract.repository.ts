@@ -23,7 +23,7 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
   }
 
   async find(filterQuery: FilterQuery<TDocument>): Promise<TDocument[]> {
-    return this.model.find(filterQuery).lean<TDocument[]>(true);
+    return this.model.find(filterQuery);
   }
 
   async findOne(filterQuery: FilterQuery<TDocument>): Promise<TDocument> {

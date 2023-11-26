@@ -6,7 +6,7 @@ import { SearchAddressController } from './infra/http';
 @Module({
   imports: [
     HttpModule.register({
-      baseURL: 'https://viacep.com.br/ws',
+      baseURL: 'https://brasilapi.com.br/api/cep/v2',
     }),
   ],
   providers: [SearchAdddressService],

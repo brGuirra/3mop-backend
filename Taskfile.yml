@@ -24,3 +24,9 @@ tasks:
     cmds:
       - docker compose --env-file .${NODE_ENV}.env stop database database_admin app
     silent: true
+  db:seed:
+    desc: Seed database with fake data
+    dotenv: ['.development.env']
+    cmds:
+      - npx ts-node -r tsconfig-paths/register ./seed.ts --db-url ${DATABASE_URL}
+    silent: true
