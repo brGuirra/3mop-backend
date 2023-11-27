@@ -9,6 +9,7 @@ import { setupSwagger } from './common/swagger';
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
+    cors: true,
   });
   const configService =
     app.get<ConfigService<EnvironmentVariables>>(ConfigService);

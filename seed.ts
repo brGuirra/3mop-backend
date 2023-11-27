@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker/locale/pt_BR';
+import { faker } from '@faker-js/faker';
 import { ContactSchema, CreateContact } from '@src/contacts/domain';
 import mongoose from 'mongoose';
 
@@ -14,18 +14,27 @@ async function seed() {
 
     await model.deleteMany({});
 
-    const contacts: CreateContact[] = Array.from({ length: 50 }, () => {
+    const contacts: CreateContact[] = Array.from({ length: 10 }, () => {
       return {
         firstName: faker.person.firstName(),
         lastName: faker.person.lastName(),
-        email: faker.internet.email(),
-        cellphone: faker.phone.number(),
+        email: faker.internet.email().toLowerCase(),
+        cellphone: faker.string.numeric({
+          length: { min: 11, max: 11 },
+          allowLeadingZeros: false,
+        }),
         address: {
           street: faker.location.street(),
           buildingNumber: faker.location.buildingNumber(),
-          streetAddress: faker.location.streetAddress(),
+          streetAddress: faker.location.county(),
           city: faker.location.city(),
-          zipCode: faker.location.zipCode(),
+          zipCode: faker.string.numeric({
+            length: {
+              min: 8,
+              max: 8,
+            },
+            allowLeadingZeros: false,
+          }),
           state: faker.location.state({ abbreviated: true }),
         },
       };

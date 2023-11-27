@@ -6,7 +6,9 @@ export class ZipCodeValidationPipe implements PipeTransform {
     const pattern = /^\d{8}$/;
 
     if (!pattern.test(zipCode)) {
-      throw new BadRequestException('formato de CEP inválido');
+      throw new BadRequestException(
+        'invalid zip code, must match the patter /^\\d{8}$/',
+      );
     }
 
     return zipCode;

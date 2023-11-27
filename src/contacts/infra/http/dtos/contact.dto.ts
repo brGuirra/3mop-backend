@@ -1,7 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Address, ContactDocument } from '@src/contacts/domain';
 import { Type } from 'class-transformer';
-import { IsEmail, IsNotEmpty, IsString, ValidateNested } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  Matches,
+  ValidateNested,
+} from 'class-validator';
 
 export class AddressDto implements Address {
   @ApiProperty({
@@ -91,8 +97,11 @@ export class ContactDto implements ContactDocument {
   @ApiProperty({
     type: 'string',
     description: "The contact's cellphone number",
-    pattern: '^d{11}$',
+    pattern: '^\\d{11}$',
     example: '11999928585',
+  })
+  @Matches(/^\d{11}$/, {
+    message: 'cellphone must match the pattern /^\\d{11}$/',
   })
   cellphone: string;
 
