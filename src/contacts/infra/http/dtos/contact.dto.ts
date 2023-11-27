@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsZipCodeValid } from '@src/common/validators';
 import { Address, ContactDocument } from '@src/contacts/domain';
 import { Type } from 'class-transformer';
 import {
@@ -6,6 +7,7 @@ import {
   IsNotEmpty,
   IsString,
   Matches,
+  Validate,
   ValidateNested,
 } from 'class-validator';
 
@@ -51,6 +53,8 @@ export class AddressDto implements Address {
     description: "The state's code of the address",
     example: 'São Paulo',
   })
+  @IsString()
+  @IsNotEmpty()
   state: string;
 
   @ApiProperty({
@@ -58,6 +62,7 @@ export class AddressDto implements Address {
     description: 'The zip code of the address',
     example: '14400123',
   })
+  @Validate(IsZipCodeValid)
   zipCode: string;
 }
 
