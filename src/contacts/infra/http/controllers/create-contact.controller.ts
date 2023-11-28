@@ -11,6 +11,7 @@ import {
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
   ApiOperation,
+  ApiSecurity,
   ApiTags,
   ApiUnauthorizedResponse,
   ApiUnprocessableEntityResponse,
@@ -19,8 +20,9 @@ import { APIError, UnprocessableEntityErrorDto } from '@src/common/swagger';
 import { CreateContactService } from '@src/contacts/services';
 import { ContactDto, CreateContactDto } from '../dtos';
 
-@Controller('v1/contacts')
 @ApiTags('Contacts')
+@ApiSecurity('Api-Key')
+@Controller('v1/contacts')
 export class CreateContactController {
   constructor(
     @Inject(CreateContactService)

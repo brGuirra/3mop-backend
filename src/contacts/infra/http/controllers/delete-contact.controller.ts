@@ -11,14 +11,16 @@ import {
   ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiOperation,
+  ApiSecurity,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { APIError } from '@src/common/swagger';
 import { DeleteContactService } from '@src/contacts/services';
 
-@Controller('v1/contacts')
 @ApiTags('Contacts')
+@ApiSecurity('Api-Key')
+@Controller('v1/contacts')
 export class DeleteContactController {
   constructor(
     @Inject(DeleteContactService)

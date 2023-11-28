@@ -6,6 +6,14 @@ export function setupSwagger(app: INestApplication): void {
     .setTitle('Contacts Manager API')
     .setDescription('The API offers resources to manage a contatcs list')
     .setVersion(process.env.npm_package_version)
+    .addApiKey(
+      {
+        type: 'apiKey',
+        in: 'header',
+        name: 'X-Api-Key',
+      },
+      'Api-Key',
+    )
     .addTag(
       'Contacts',
       'Resources to perform CRUD operations related to contacts entities',

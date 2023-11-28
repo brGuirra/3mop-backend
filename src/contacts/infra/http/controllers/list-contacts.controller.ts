@@ -3,6 +3,7 @@ import {
   ApiInternalServerErrorResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiSecurity,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -10,8 +11,9 @@ import { APIError } from '@src/common/swagger';
 import { ListContactsService } from '@src/contacts/services';
 import { ContactDto } from '../dtos';
 
-@Controller('v1/contacts')
 @ApiTags('Contacts')
+@ApiSecurity('Api-Key')
+@Controller('v1/contacts')
 export class ListContactsController {
   constructor(
     @Inject(ListContactsService)

@@ -1,73 +1,79 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# 3Mop Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Esta aplicação é o backend de um gerenciador de contatos.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Requisitos
 
-## Description
+Para executar esta aplicação é necessário ter os seguintes softwares
+instalados em sua máquina:
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Node.js (versão LTS)
+- Docker
 
-## Installation
+A instalação do node pode ser feita seguindo passo à passo
+na [documentação](https://nodejs.org/en/download) para o seu sistema operacional.
+
+Para instalar o docker, também recomanda-se o passo à passo
+da [documentação](https://docs.docker.com/get-docker/) para o seu sistema operacional.
+
+## Instruções para uso
+
+Após clonar e accessar a pasta com o repositório em sem computador,o primeiro
+passo é criar um arquivo com as variáveis de ambiente da aplicação.
+
+Em um máquina com Unix/Linux, rode o comando:
 
 ```bash
-$ npm install
+cp ./.example.env .development.env
 ```
 
-## Running the app
+Em uma máquina com Windows, rode o comando:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+copy .\.example.env .development.env
 ```
 
-## Test
+Em seguida deve ser feita a instalação das dependências com o comando:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm install
 ```
 
-## Support
+Antes de executar a aplicação, certifique-se de que o Docker está rodando
+em sua máquina com o comando:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+docker info
+```
 
-## Stay in touch
+Em seguida, para iniciar o servidor rode o comando abaixo. Ao final, um Swagger
+com a documentação dos recuros da API estará disponível em `http://localhost:4000/api/docs`.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+task up
+```
 
-## License
+Para parar a execução da aplicação, pode-se rodar o comando:
 
-Nest is [MIT licensed](LICENSE).
+```bash
+task stop
+```
+
+Para conveniência, o banco de dados pode ser populado com dados
+fake executando o comando:
+
+```bash
+task db:seed
+```
+
+Os dados do banco podem ser visualizados através do utilitário
+[Mongo Express](https://github.com/mongo-express/mongo-express). Ele estará disponível em `http://localhost:8081`.
+O usuário e senha para accesso estão no arquivo `.development.env`.
+
+A aplicação também dispõe de um coleção do Postman com os recuros
+da API para facilitar o uso local. A coleção está disponível em
+`./docs/3mop-api.postman_collection.json`.
+
+Para instalar o Postman, basta seguir as orientações da
+[documetação](https://www.postman.com/downloads/). Este [passo à passo](https://learning.postman.com/docs/getting-started/importing-and-exporting/importing-and-exporting-overview/) contém orientações sobre como
+importar um coleção no Postman.

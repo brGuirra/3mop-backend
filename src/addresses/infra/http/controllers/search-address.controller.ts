@@ -14,6 +14,7 @@ import {
   ApiOkResponse,
   ApiOperation,
   ApiParam,
+  ApiSecurity,
   ApiTags,
 } from '@nestjs/swagger';
 import { SearchAdddressService } from '@src/addresses/services';
@@ -22,8 +23,9 @@ import { APIError } from '@src/common/swagger';
 import { Observable } from 'rxjs';
 import { SearchAddressResultDto } from '../dtos';
 
-@Controller('v1/addresses/search')
 @ApiTags('Addresses')
+@ApiSecurity('Api-Key')
+@Controller('v1/addresses/search')
 export class SearchAddressController {
   constructor(
     @Inject(SearchAdddressService)
