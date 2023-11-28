@@ -12,6 +12,7 @@ import {
   ApiNotFoundResponse,
   ApiOperation,
   ApiTags,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { APIError } from '@src/common/swagger';
 import { DeleteContactService } from '@src/contacts/services';
@@ -30,6 +31,10 @@ export class DeleteContactController {
     summary: 'Delete a contact by its id',
     description: 'Delete a contact by its id',
     operationId: 'DeleteContact',
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Invalid credentials',
+    type: () => APIError,
   })
   @ApiNoContentResponse({
     description: 'Contact deleted',

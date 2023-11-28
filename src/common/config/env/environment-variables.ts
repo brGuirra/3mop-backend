@@ -18,6 +18,10 @@ export class EnvironmentVariables {
   @IsPositive()
   APP_PORT: number;
 
+  @IsString()
+  @IsNotEmpty()
+  FRONTEND_API_KEY: string;
+
   // DATABASE
   @IsString()
   @IsNotEmpty()

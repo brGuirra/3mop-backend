@@ -4,6 +4,7 @@ import {
   ApiOkResponse,
   ApiOperation,
   ApiTags,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { APIError } from '@src/common/swagger';
 import { ListContactsService } from '@src/contacts/services';
@@ -28,6 +29,10 @@ export class ListContactsController {
     description: 'Contacts list',
     type: () => ContactDto,
     isArray: true,
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Invalid credentials',
+    type: () => APIError,
   })
   @ApiInternalServerErrorResponse({
     description: 'Internal server error',

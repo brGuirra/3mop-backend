@@ -14,6 +14,7 @@ import {
   ApiOkResponse,
   ApiOperation,
   ApiTags,
+  ApiUnauthorizedResponse,
   ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
 import { APIError, UnprocessableEntityErrorDto } from '@src/common/swagger';
@@ -38,6 +39,10 @@ export class UpdateContactController {
   @ApiOkResponse({
     description: 'Updated contact',
     type: () => ContactDto,
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Invalid credentials',
+    type: () => APIError,
   })
   @ApiNotFoundResponse({
     description: 'Contact not found',

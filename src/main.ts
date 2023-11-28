@@ -5,6 +5,7 @@ import { Logger } from 'nestjs-pino';
 import { AppModule } from './app.module';
 import { EnvironmentVariables } from './common/config';
 import { setupSwagger } from './common/swagger';
+import { AuthGuard } from './auth/guards';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule, {
@@ -31,6 +32,8 @@ async function bootstrap(): Promise<void> {
       },
     }),
   );
+
+  app.useGlobalGuards(new AuthGuard(configService));
 
   await app.listen(configService.get('APP_PORT') || 4000);
 }

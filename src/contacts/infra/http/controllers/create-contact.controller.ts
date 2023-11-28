@@ -12,6 +12,7 @@ import {
   ApiInternalServerErrorResponse,
   ApiOperation,
   ApiTags,
+  ApiUnauthorizedResponse,
   ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
 import { APIError, UnprocessableEntityErrorDto } from '@src/common/swagger';
@@ -36,6 +37,10 @@ export class CreateContactController {
   @ApiCreatedResponse({
     description: 'Created contact',
     type: () => ContactDto,
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Invalid credentials',
+    type: () => APIError,
   })
   @ApiConflictResponse({
     description: 'Conflict error',

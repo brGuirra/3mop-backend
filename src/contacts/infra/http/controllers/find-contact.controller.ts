@@ -12,6 +12,7 @@ import {
   ApiOkResponse,
   ApiOperation,
   ApiTags,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { APIError } from '@src/common/swagger';
 import { FindContactService } from '@src/contacts/services';
@@ -35,6 +36,10 @@ export class FindContactController {
   @ApiOkResponse({
     description: 'Contact data',
     type: () => ContactDto,
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Invalid credentials',
+    type: () => APIError,
   })
   @ApiNotFoundResponse({
     description: 'Contact not found',
